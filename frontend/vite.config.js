@@ -19,7 +19,7 @@ export default defineConfig({
   },
   server: {
     port: 3000,
-    host: "localhost"
+    host: "0.0.0.0" // ⬅️ This is the fix that allows Render to bind to the port
   },
   define: {
     "process.env": process.env
@@ -30,11 +30,11 @@ export default defineConfig({
   plugins: [
     react(),
     visualizer({
-      template: "treemap", // or sunburst
+      template: "treemap",
       open: false,
       gzipSize: true,
       brotliSize: true,
-      filename: "bundleinspector.html" // will be saved in project's root
+      filename: "bundleinspector.html"
     })
   ],
   resolve: {
@@ -58,8 +58,6 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
-        // These settings ensure the primary JS and CSS file references are always index.{js,css}
-        // so we can SSR the index.html as text response from server/index.js without breaking references each build.
         entryFileNames: 'index.js',
         assetFileNames: (assetInfo) => {
           if (assetInfo.name === 'index.css') return `index.css`;
@@ -67,7 +65,6 @@ export default defineConfig({
         },
       },
       external: [
-        // Reduces transformation time by 50% and we don't even use this variant, so we can ignore.
         /@phosphor-icons\/react\/dist\/ssr/,
       ]
     },
