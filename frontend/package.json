@@ -6,7 +6,7 @@
   "scripts": {
     "start": "serve -s dist -l 4173",
     "dev": "cross-env NODE_ENV=development vite --debug --host=0.0.0.0",
-    "build": "vite build && node scripts/postbuild.js",
+    "build": "vite build",
     "lint": "yarn prettier --ignore-path ../.prettierignore --write ./src",
     "preview": "vite preview"
   },
