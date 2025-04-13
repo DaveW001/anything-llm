@@ -4,7 +4,7 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "start": "vite preview --host",
+    "start": "serve -s dist -l 4173",
     "dev": "cross-env NODE_ENV=development vite --debug --host=0.0.0.0",
     "build": "vite build && node scripts/postbuild.js",
     "lint": "yarn prettier --ignore-path ../.prettierignore --write ./src",
@@ -45,6 +45,7 @@
     "react-tooltip": "^5.25.2",
     "recharts": "^2.12.5",
     "recharts-to-png": "^2.3.1",
+    "serve": "^14.2.4",
     "text-case": "^1.0.9",
     "truncate": "^3.0.0",
     "uuid": "^9.0.0"
