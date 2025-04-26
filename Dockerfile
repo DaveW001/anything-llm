@@ -9,9 +9,9 @@ COPY frontend/package.json frontend/yarn.lock ./frontend/
 COPY server/package.json server/yarn.lock ./server/
 COPY collector/package.json collector/yarn.lock ./collector/
 
-RUN cd frontend && yarn install
-RUN cd ../server && yarn install
-RUN cd ../collector && yarn install
+RUN yarn --cwd frontend install
+RUN yarn --cwd server install
+RUN yarn --cwd collector install
 
 # Copy all app files
 COPY frontend ./frontend
@@ -19,7 +19,7 @@ COPY server ./server
 COPY collector ./collector
 
 # Build frontend
-RUN cd frontend && yarn build
+RUN yarn --cwd frontend build
 
 # Install process manager
 RUN apt-get update && apt-get install -y supervisor
