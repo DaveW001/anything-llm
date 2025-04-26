@@ -1,17 +1,13 @@
 services:
   - type: web
-    name: anything-llm
-    env: node
-    region: oregon
+    name: anything-llm-docker
+    env: docker
     plan: free
-    branch: main
-    rootDir: frontend
-    buildCommand: npm install && npm run build
-    startCommand: npm start
+    autoDeploy: true
     envVars:
-      - key: CLERK_SECRET_KEY
+      - key: NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
         sync: false
-      - key: CLERK_PUBLISHABLE_KEY
+      - key: CLERK_SECRET_KEY
         sync: false
       - key: NEXT_PUBLIC_CLERK_FRONTEND_API
         sync: false
