@@ -18,9 +18,6 @@ COPY frontend ./frontend
 COPY server ./server
 COPY collector ./collector
 
-# Build frontend
-RUN yarn --cwd frontend build
-
 # Install process manager
 RUN apt-get update && apt-get install -y supervisor
 
@@ -31,4 +28,4 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 EXPOSE 3000
 
 # Start all services
-CMD ["/usr/bin/supervisord"]
+CMD ["sh", "-c", "cd frontend && yarn build && cd .. && /usr/bin/supervisord"]
