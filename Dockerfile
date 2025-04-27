@@ -1,31 +1,31 @@
 # Base image
 FROM node:18-slim
 
-# Create app directories
+# Set working directory
 WORKDIR /app
 
-# Install dependencies for all services
+# Copy package files and node_modules
 COPY frontend/package.json frontend/yarn.lock ./frontend/
 COPY server/package.json server/yarn.lock ./server/
 COPY collector/package.json collector/yarn.lock ./collector/
 
-RUN yarn --cwd frontend install
-RUN yarn --cwd server install
-RUN yarn --cwd collector install
+COPY frontend/node_modules ./frontend/node_modules
+COPY server/node_modules ./server/node_modules
+COPY collector/node_modules ./collector/node_modules
 
-# Copy all app files
+# Copy application source code
 COPY frontend ./frontend
 COPY server ./server
 COPY collector ./collector
 
-# Install process manager
+# Install supervisor for managing multiple services
 RUN apt-get update && apt-get install -y supervisor
 
 # Copy Supervisor config
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
-# Expose ports
+# Expose the web port
 EXPOSE 3000
 
-# Start all services
-CMD ["sh", "-c", "cd frontend && yarn build && cd .. && /usr/bin/supervisord"]
+# Start Supervisor to run all apps (frontend + backend + collector)
+CMD ["/usr/bin/supervisord"]
