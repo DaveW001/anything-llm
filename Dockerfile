@@ -6,6 +6,7 @@ WORKDIR /app
 
 # Install basic utilities
 RUN apt-get update && apt-get install -y supervisor
+RUN npm install -g yarn
 
 # Copy frontend and server package configs
 COPY frontend/package.json frontend/yarn.lock ./frontend/
