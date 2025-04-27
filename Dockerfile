@@ -7,23 +7,19 @@ WORKDIR /app
 # Install basic utilities
 RUN apt-get update && apt-get install -y supervisor
 
-# Copy package.json and lockfiles first (better caching)
+# Copy frontend and server package configs
 COPY frontend/package.json frontend/yarn.lock ./frontend/
 COPY server/package.json server/yarn.lock ./server/
-COPY collector/package.json collector/yarn.lock ./collector/
 
-# Install frontend dependencies
+# Install frontend and server dependencies
 RUN yarn --cwd frontend install
-
-# Install server dependencies
 RUN yarn --cwd server install
 
-# Install collector dependencies
-RUN yarn --cwd collector install
-
-# Copy all app source code
+# Copy source code for frontend and server
 COPY frontend ./frontend
 COPY server ./server
+
+# Copy pre-built collector (node_modules already installed locally)
 COPY collector ./collector
 
 # Copy Supervisor config
