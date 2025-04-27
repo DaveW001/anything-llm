@@ -5,7 +5,6 @@
 **/server/storage/lancedb
 **/collector/hotdir/**
 **/collector/outputs/**
-**/node_modules/
 **/dist/
 **/v-env/
 **/__pycache__/
